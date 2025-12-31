@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom CSS Variables */
+:root {
+    --color-fire-primary: #f97316;
+    --color-fire-secondary: #ea580c;
+    --color-dark-bg: #0f172a;
+    --color-dark-surface: #1e293b;
+}
+
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--color-dark-bg);
+    color: #f1f5f9;
+}
+
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-dark-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-fire-primary);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-fire-secondary);
+}
+
+/* Glassmorphism Effect */
+.glass {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(249, 115, 22, 0.08);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* Gradient Text */
+.gradient-text {
+    background: linear-gradient(135deg, #ea580c 0%, #f97316 50%, #fb923c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Button Styles */
+@layer utilities {
+    .bg-gradient-fire {
+        background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+    }
+}
+
+.btn-primary {
+    @apply bg-gradient-fire text-white px-6 py-3 rounded-lg font-semibold transition-all duration-500 hover:shadow-lg hover:shadow-fire-500/40 hover:scale-105 active:scale-95;
+}
+
+.btn-secondary {
+    @apply glass text-white px-6 py-3 rounded-lg font-semibold transition-all duration-500 hover:bg-white/5 border border-fire-500/20 hover:border-fire-500/50;
+}
+
+/* Card Styles */
+.card {
+    @apply glass rounded-xl p-6 transition-all duration-500 hover:border-fire-500/30 hover:shadow-2xl hover:shadow-fire-500/10 hover:-translate-y-2;
+}
+
+/* Section Padding */
+.section-padding {
+    @apply py-16 md:py-24 px-4 md:px-8;
+}
+
+/* Container */
+.container-custom {
+    @apply max-w-7xl mx-auto;
+}
+
+/* Loading Animation */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading {
+    animation: spin 1s linear infinite;
+}
+
+/* Fade In Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Hero Gradient Background */
+.hero-gradient {
+    background: radial-gradient(circle at top right, rgba(249, 115, 22, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at bottom left, rgba(234, 88, 12, 0.15) 0%, transparent 50%),
+        var(--color-dark-bg);
+}
+
+/* Background Animated Blobs */
+.bg-blob {
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(249, 115, 22, 0.05) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(100px);
+    z-index: -1;
+    pointer-events: none;
+    animation: move-blob 25s infinite alternate ease-in-out;
+}
+
+@keyframes move-blob {
+    0% {
+        transform: translate(-10%, -10%) scale(1);
+    }
+
+    100% {
+        transform: translate(15%, 15%) scale(1.2);
+    }
+}
