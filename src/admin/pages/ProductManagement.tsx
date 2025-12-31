@@ -135,6 +135,10 @@ const ProductManagement = () => {
         alert("Failed to upload image. Please try again.");
         return;
       }
+    } else if (!editingProduct && !formData.image) {
+      // If adding a new product and no file is selected and no URL is provided
+      alert("Please select an image or provide an image URL.");
+      return;
     }
 
     const url = editingProduct
@@ -397,22 +401,6 @@ const ProductManagement = () => {
                             Supported formats: JPG, PNG, WEBP
                           </p>
                         </div>
-                      </div>
-
-                      {/* Fallback URL input */}
-                      <div className="relative">
-                        <span className="text-xs text-gray-500 mb-1 block">
-                          Or use image URL
-                        </span>
-                        <input
-                          type="url"
-                          value={formData.image}
-                          onChange={(e) =>
-                            setFormData({ ...formData, image: e.target.value })
-                          }
-                          className="w-full bg-dark-800 border border-fire-500/20 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-fire-500 text-sm"
-                          placeholder="https://..."
-                        />
                       </div>
                     </div>
                   </div>
