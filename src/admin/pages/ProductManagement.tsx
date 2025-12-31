@@ -124,6 +124,19 @@ const ProductManagement = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    let finalImageUrl = formData.image;
+
+    if (imageFile) {
+      const uploadedUrl = await uploadImage();
+      if (uploadedUrl) {
+        finalImageUrl = uploadedUrl;
+      } else {
+        alert("Failed to upload image. Please try again.");
+        return;
+      }
+    }
+
     const url = editingProduct
       ? `http://localhost:5000/api/products/${editingProduct.id}`
       : "http://localhost:5000/api/products";
@@ -133,11 +146,13 @@ const ProductManagement = () => {
       const response = await fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, image: finalImageUrl }),
       });
       if (response.ok) {
         fetchProducts();
         setIsModalOpen(false);
+        setImageFile(null);
+        setImagePreview("");
       }
     } catch (err) {
       console.error("Error saving product:", err);
@@ -346,23 +361,59 @@ const ProductManagement = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-400 mb-2">
-                      Image URL
+                      Product Image
                     </label>
-                    <div className="relative">
-                      <ImageIcon
-                        className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                        size={18}
-                      />
-                      <input
-                        type="url"
-                        required
-                        value={formData.image}
-                        onChange={(e) =>
-                          setFormData({ ...formData, image: e.target.value })
-                        }
-                        className="w-full pl-10 pr-4 py-2 bg-dark-800 border border-fire-500/20 rounded-lg text-white focus:outline-none focus:border-fire-500"
-                        placeholder="https://images.unsplash.com/..."
-                      />
+                    <div className="space-y-4">
+                      <div className="flex items-center space-x-4">
+                        {(imagePreview || formData.image) && (
+                          <div className="relative w-24 h-24 rounded-lg overflow-hidden border border-fire-500/20">
+                            <img
+                              src={imagePreview || formData.image}
+                              alt="Preview"
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                        )}
+                        <div className="flex-1">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageChange}
+                            className="hidden"
+                            id="image-upload"
+                          />
+                          <label
+                            htmlFor="image-upload"
+                            className="flex items-center justify-center w-full px-4 py-2 border-2 border-dashed border-gray-600 rounded-lg cursor-pointer hover:border-fire-500 hover:text-fire-500 transition-colors"
+                          >
+                            <div className="flex items-center space-x-2 text-gray-400">
+                              <ImageIcon size={20} />
+                              <span>
+                                {uploading ? "Uploading..." : "Choose Image"}
+                              </span>
+                            </div>
+                          </label>
+                          <p className="text-xs text-gray-500 mt-2">
+                            Supported formats: JPG, PNG, WEBP
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Fallback URL input */}
+                      <div className="relative">
+                        <span className="text-xs text-gray-500 mb-1 block">
+                          Or use image URL
+                        </span>
+                        <input
+                          type="url"
+                          value={formData.image}
+                          onChange={(e) =>
+                            setFormData({ ...formData, image: e.target.value })
+                          }
+                          className="w-full bg-dark-800 border border-fire-500/20 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-fire-500 text-sm"
+                          placeholder="https://..."
+                        />
+                      </div>
                     </div>
                   </div>
 
