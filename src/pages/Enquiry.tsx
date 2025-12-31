@@ -21,7 +21,7 @@ const Enquiry = () => {
 
   useEffect(() => {
     // Fetch products from database
-    fetch("http://localhost:5000/api/products")
+    fetch("/api/products")
       .then((res) => res.json())
       .then((data) => {
         setProducts(data);
@@ -42,7 +42,7 @@ const Enquiry = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5000/api/enquiries", {
+      const response = await fetch("/api/enquiries", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

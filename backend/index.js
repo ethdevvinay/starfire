@@ -16,6 +16,9 @@ app.use(express.json());
 // Serve static files from uploads directory
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// Serve React App
+app.use(express.static(path.join(__dirname, '../dist')));
+
 // Multer configuration for image uploads
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -420,6 +423,11 @@ app.get('/api/admin/enquiries/recent', (req, res) => {
         }
         res.json(results);
     });
+});
+
+// Serve React App for any other route (SPA Fallback)
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
 // Start Server

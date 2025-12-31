@@ -22,14 +22,14 @@ const ProductManagement = () => {
   }, []);
 
   const fetchProducts = () => {
-    fetch("http://localhost:5000/api/products")
+    fetch("/api/products")
       .then((res) => res.json())
       .then((data) => setProducts(data))
       .catch((err) => console.error("Error fetching products:", err));
   };
 
   const fetchCategories = () => {
-    fetch("http://localhost:5000/api/categories")
+    fetch("/api/categories")
       .then((res) => res.json())
       .then((data) => setCategories(data))
       .catch((err) => console.error("Error fetching categories:", err));
@@ -101,13 +101,10 @@ const ProductManagement = () => {
     formDataUpload.append("image", imageFile);
 
     try {
-      const response = await fetch(
-        "http://localhost:5000/api/upload/product-image",
-        {
-          method: "POST",
-          body: formDataUpload,
-        }
-      );
+      const response = await fetch("/api/upload/product-image", {
+        method: "POST",
+        body: formDataUpload,
+      });
 
       if (response.ok) {
         const data = await response.json();
@@ -142,8 +139,8 @@ const ProductManagement = () => {
     }
 
     const url = editingProduct
-      ? `http://localhost:5000/api/products/${editingProduct.id}`
-      : "http://localhost:5000/api/products";
+      ? `/api/products/${editingProduct.id}`
+      : "/api/products";
     const method = editingProduct ? "PUT" : "POST";
 
     try {
@@ -166,12 +163,9 @@ const ProductManagement = () => {
   const handleDelete = async (id: number) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       try {
-        const response = await fetch(
-          `http://localhost:5000/api/products/${id}`,
-          {
-            method: "DELETE",
-          }
-        );
+        const response = await fetch(`/api/products/${id}`, {
+          method: "DELETE",
+        });
         if (response.ok) {
           fetchProducts();
         }

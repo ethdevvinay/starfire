@@ -26,7 +26,7 @@ const EnquiryManagement = () => {
   }, []);
 
   const fetchEnquiries = () => {
-    fetch("http://localhost:5000/api/enquiries")
+    fetch("/api/enquiries")
       .then((res) => res.json())
       .then((data) => setEnquiries(data))
       .catch((err) => console.error("Error fetching enquiries:", err));
@@ -48,14 +48,11 @@ const EnquiryManagement = () => {
 
   const updateStatus = async (id: number, newStatus: Enquiry["status"]) => {
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/enquiries/${id}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ status: newStatus }),
-        }
-      );
+      const response = await fetch(`/api/enquiries/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: newStatus }),
+      });
       if (response.ok) {
         fetchEnquiries();
         if (selectedEnquiry?.id === id) {
@@ -70,12 +67,9 @@ const EnquiryManagement = () => {
   const deleteEnquiry = async (id: number) => {
     if (window.confirm("Are you sure you want to delete this enquiry?")) {
       try {
-        const response = await fetch(
-          `http://localhost:5000/api/enquiries/${id}`,
-          {
-            method: "DELETE",
-          }
-        );
+        const response = await fetch(`/api/enquiries/${id}`, {
+          method: "DELETE",
+        });
         if (response.ok) {
           fetchEnquiries();
           setSelectedEnquiry(null);

@@ -35,13 +35,13 @@ const Products = () => {
 
   useEffect(() => {
     // Fetch products
-    fetch("http://localhost:5000/api/products")
+    fetch("/api/products")
       .then((res) => res.json())
       .then((data) => setProducts(data))
       .catch((err) => console.error("Error fetching products:", err));
 
     // Fetch categories
-    fetch("http://localhost:5000/api/categories")
+    fetch("/api/categories")
       .then((res) => res.json())
       .then((data) => setCategoriesData(data))
       .catch((err) => console.error("Error fetching categories:", err));

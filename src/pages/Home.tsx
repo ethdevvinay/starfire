@@ -213,7 +213,7 @@ const Home = () => {
   const [featuredProducts, setFeaturedProducts] = useState<any[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/products?is_featured=true")
+    fetch("/api/products?is_featured=true")
       .then((res) => res.json())
       .then((data) => setFeaturedProducts(data))
       .catch((err) => console.error("Error fetching featured products:", err));

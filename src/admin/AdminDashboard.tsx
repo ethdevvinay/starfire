@@ -24,13 +24,13 @@ const AdminDashboard = () => {
     }
 
     // Fetch Stats
-    fetch("http://localhost:5000/api/admin/stats")
+    fetch("/api/admin/stats")
       .then((res) => res.json())
       .then((data) => setStats(data))
       .catch((err) => console.error("Error fetching admin stats:", err));
 
     // Fetch Recent Enquiries
-    fetch("http://localhost:5000/api/admin/enquiries/recent")
+    fetch("/api/admin/enquiries/recent")
       .then((res) => res.json())
       .then((data) => setRecentEnquiries(data))
       .catch((err) => console.error("Error fetching recent enquiries:", err));

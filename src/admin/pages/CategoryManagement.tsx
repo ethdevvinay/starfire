@@ -14,7 +14,7 @@ const CategoryManagement = () => {
   }, []);
 
   const fetchCategories = () => {
-    fetch("http://localhost:5000/api/categories")
+    fetch("/api/categories")
       .then((res) => res.json())
       .then((data) => setCategories(data))
       .catch((err) => console.error("Error fetching categories:", err));
@@ -48,8 +48,8 @@ const CategoryManagement = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const url = editingCategory
-      ? `http://localhost:5000/api/categories/${editingCategory.id}`
-      : "http://localhost:5000/api/categories";
+      ? `/api/categories/${editingCategory.id}`
+      : "/api/categories";
     const method = editingCategory ? "PUT" : "POST";
 
     try {
@@ -70,12 +70,9 @@ const CategoryManagement = () => {
   const handleDelete = async (id: number) => {
     if (window.confirm("Are you sure you want to delete this category?")) {
       try {
-        const response = await fetch(
-          `http://localhost:5000/api/categories/${id}`,
-          {
-            method: "DELETE",
-          }
-        );
+        const response = await fetch(`/api/categories/${id}`, {
+          method: "DELETE",
+        });
         if (response.ok) {
           fetchCategories();
         }
